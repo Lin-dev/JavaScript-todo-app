@@ -44,10 +44,12 @@ $('body').on('click', '#list-master li', function() {
 /******** Edit functionality *****/
 
 $('body').on('click', '#list-master .fa-cog', function() {
-  $(this).hide();
-  $(this).prev().removeClass('list-item');
-  taskCache = $(this).prev().text();
-  $(this).prev().html('<input type="text" class="edit-input" placeholder="' + taskCache + '"/><button id="save">Save</button><button id="cancel">Cancel</button>');
+  if (!$(this).prev().hasClass('done')) {
+    $(this).hide();
+    $(this).prev().removeClass('list-item');
+    taskCache = $(this).prev().text();
+    $(this).prev().html('<input type="text" class="edit-input" placeholder="' + taskCache + '"/><button id="save">Save</button><button id="cancel">Cancel</button>');
+  }
 });
 
 // Functionality for save button
