@@ -34,8 +34,10 @@ $('body').on('click', '#list-master li', function() {
     $(this).toggleClass('done');
     if ($(this).hasClass('done')) {
       tasksToComplete--;
+      $(this).next().addClass('no-cog');
     } else {
       tasksToComplete++;
+      $(this).next().removeClass('no-cog');
     }
     displayCount();
   }
@@ -48,19 +50,21 @@ $('body').on('click', '#list-master .fa-cog', function() {
     $(this).hide();
     $(this).prev().removeClass('list-item');
     taskCache = $(this).prev().text();
-    $(this).prev().html('<input type="text" class="edit-input" placeholder="' + taskCache + '"/><button id="save">Save</button><button id="cancel">Cancel</button>');
+    $(this).prev().html('<input type="text" class="edit-input" placeholder="' + taskCache + '"/><span class="edit-buttons"><button id="save">Save</button><button id="cancel">Cancel</button></span>');
   }
 });
 
 // Functionality for save button
 $('body').on('click', '#list-master #save', function() {
   itemToAdd = $('.edit-input').val();
-  $(this).parent().replaceWith(' <li class="list-item">' + itemToAdd + '</li><i class="fa fa-cog"></i>');
+  if (itemToAdd !== "") {
+    $(this).parent().parent().replaceWith(' <li class="list-item">' + itemToAdd + '</li><i class="fa fa-cog"></i>');
+  }
 
 });
 
 // Cancel Functionality
 $('body').on('click', '#list-master #cancel', function() {
-  $(this).parent().replaceWith(' <li class="list-item">' + taskCache + '</li><i class="fa fa-cog"></i>');
+  $(this).parent().parent().replaceWith(' <li class="list-item">' + taskCache + '</li><i class="fa fa-cog"></i>');
 
 });
